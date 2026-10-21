@@ -165,43 +165,62 @@
                 <input id="interactiveExhibitionHours" type="number" min="1" max="24" value="8" />
               </div>
               <div class="field">
-                <label for="interactiveExhibitionLux">Exhibition lux level</label>
-                <input id="interactiveExhibitionLux" type="number" min="0" max="4000" value="10" />
+                <label for="interactiveCleaningHours">Cleaning lighting hours per day</label>
+                <input id="interactiveCleaningHours" type="number" min="0" max="24" value="1" />
               </div>
             </div>
 
             <div class="field-row two-up">
-              <div class="field">
-                <label for="interactiveCleaningHours">Cleaning lighting hours per day</label>
-                <input id="interactiveCleaningHours" type="number" min="0" max="24" value="1" />
-              </div>
               <div class="field">
                 <label for="interactiveCleaningLux">Cleaning lux level</label>
                 <input id="interactiveCleaningLux" type="number" min="0" max="4000" value="20" />
               </div>
-            </div>
-
-            <div class="field-row two-up">
-              <div class="field slider-field">
-                <label for="ambientLux">Ambient lux</label>
-                <input id="ambientLux" type="range" min="0" max="4000" step="5" value="10" />
-                <div class="range-output"><span id="ambientLuxValue">10</span> lux</div>
-              </div>
-              <div class="field slider-field">
-                <label for="activeLux">Active lux</label>
-                <input id="activeLux" type="range" min="0" max="4000" step="5" value="100" />
-                <div class="range-output"><span id="activeLuxValue">100</span> lux</div>
+              <div class="field">
+                <label>Out of hours time</label>
+                <input id="interactiveOutHoursDisplay" type="text" readonly value="15.0 hours" />
               </div>
             </div>
 
             <div class="field-row two-up">
               <div class="field">
-                <label for="interactiveOnMinutes">Time on (minutes)</label>
-                <input id="interactiveOnMinutes" type="number" min="0" max="1440" value="2" />
+                <label>Ambient</label>
+                <div class="inline-pair">
+                  <div class="mini-field">
+                    <span>Time</span>
+                    <input id="ambientTime" type="number" min="0" max="1440" value="2" />
+                  </div>
+                  <div class="mini-field">
+                    <span>Lux</span>
+                    <input id="ambientLux" type="range" min="0" max="4000" step="5" value="10" />
+                    <div class="range-output"><span id="ambientLuxValue">10</span> lux</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <label>Active</label>
+                <div class="inline-pair">
+                  <div class="mini-field">
+                    <span>Time</span>
+                    <input id="activeTime" type="number" min="0" max="1440" value="2" />
+                  </div>
+                  <div class="mini-field">
+                    <span>Lux</span>
+                    <input id="activeLux" type="range" min="0" max="4000" step="5" value="100" />
+                    <div class="range-output"><span id="activeLuxValue">100</span> lux</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field-row two-up">
+              <div class="field">
+                <label>Out of hours time</label>
+                <input id="interactiveOutHoursDisplayCalculated" type="text" readonly value="15.0 hours" />
               </div>
               <div class="field">
-                <label for="interactiveOffMinutes">Time off (minutes)</label>
-                <input id="interactiveOffMinutes" type="number" min="0" max="1440" value="2" />
+                <label for="interactiveOutHoursLux">Out of hours lux</label>
+                <input id="interactiveOutHoursLux" type="number" min="0" max="4000" value="0" />
               </div>
             </div>
           </div>
@@ -241,6 +260,3 @@
     <script src="app.js"></script>
   </body>
 </html>
-
-
-
