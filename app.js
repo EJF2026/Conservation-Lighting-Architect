@@ -152,6 +152,7 @@ function handleFileUpload(event) {
   const reader = new FileReader();
   reader.onload = (loadEvent) => {
     const preview = document.getElementById('itemPreview');
+    preview.dataset.image = loadEvent.target.result;
     preview.src = loadEvent.target.result;
     preview.parentElement.classList.add('has-image');
   };
@@ -201,7 +202,9 @@ function drawSlide(exportName = 'collection-light-exposure-slide.jpg') {
   ctx.strokeStyle = border;
   ctx.strokeRect(60, 160, 670, 590);
 
-  if (image && image.src) {
+  const imageDataUrl = image && image.dataset.image ? image.dataset.image : '';
+
+  if (imageDataUrl) {
     const img = new Image();
     img.onload = () => {
       const x = 90;
@@ -216,7 +219,15 @@ function drawSlide(exportName = 'collection-light-exposure-slide.jpg') {
       ctx.drawImage(img, drawX, drawY, drawW, drawH);
       completeSlide();
     };
-    img.src = image.src;
+    img.onerror = () => {
+      ctx.fillStyle = softGrey;
+      ctx.fillRect(90, 200, 610, 420);
+      ctx.fillStyle = '#6b7b7f';
+      ctx.font = '600 30px Segoe UI';
+      ctx.fillText('No valid item image uploaded', 250, 410);
+      completeSlide();
+    };
+    img.src = imageDataUrl;
   } else {
     ctx.fillStyle = softGrey;
     ctx.fillRect(90, 200, 610, 420);
@@ -262,7 +273,7 @@ function drawSlide(exportName = 'collection-light-exposure-slide.jpg') {
           `Open: ${document.getElementById('continuousDaysOpen').value} days/week`,
           `Hours: ${document.getElementById('continuousExhibitionHours').value} exhibition / ${document.getElementById('continuousCleaningHours').value} cleaning`,
           `Lux: ${document.getElementById('continuousExhibitionLux').value} exhibition / ${document.getElementById('continuousCleaningLux').value} cleaning`,
-          `Display: ${document.getElementById(mode === 'continuous' ? 'continuousDisplayLength' : 'interactiveDisplayLength').value} years`
+          `Display: ${document.getElementById('continuousDisplayLength').value} years`
         ]
       : [
           `Open: ${document.getElementById('interactiveDaysOpen').value} days/week`,
@@ -281,10 +292,21 @@ function drawSlide(exportName = 'collection-light-exposure-slide.jpg') {
     ctx.font = '700 26px Segoe UI';
     ctx.fillText(statusBoxText(), 835, 706);
 
-    const link = document.createElement('a');
-    link.href = canvas.toDataURL('image/jpeg', 0.92);
-    link.download = exportName;
-    link.click();
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        alert('Slide export failed. Please try again.');
+        return;
+      }
+
+      const downloadUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = exportName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+    }, 'image/jpeg', 0.92);
   }
 }
 
