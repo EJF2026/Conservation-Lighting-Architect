@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Canterbury Museum Collection Item Light Exposure Calculator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="page-header">
+        <h1>Canterbury Museum Collection Item Light Exposure Calculator</h1>
+        <p class="disclaimer">
+          This assistant is for lighting with no UV present (Microfading results do not account for UV exposure).
+          We have restricted the allocation to a 10 year dose.
+        </p>
+      </header>
+
+      <main class="page-grid">
+        <section class="card item-card">
+          <h2>Collection Item Details</h2>
+
+          <div class="field">
+            <label for="itemName">Item Name</label>
+            <input id="itemName" type="text" value="Māori cloak fragment" placeholder="Enter collection item name" />
+          </div>
+
+          <div class="field">
+            <label>Curatorial Assessment of Significance</label>
+            <div class="choice-stack" id="significanceGroup">
+              <label class="choice-card">
+                <input type="radio" name="significance" value="high" />
+                <span>
+                  <strong>High</strong>
+                  <small>50 years per JNF (lifetime 500 years)</small>
+                </span>
+              </label>
+              <label class="choice-card selected">
+                <input type="radio" name="significance" value="normal" checked />
+                <span>
+                  <strong>Normal</strong>
+                  <small>25 years per JNF (lifetime 250 years)</small>
+                </span>
+              </label>
+              <label class="choice-card">
+                <input type="radio" name="significance" value="low" />
+                <span>
+                  <strong>Low</strong>
+                  <small>10 years per JNF (lifetime 100 years)</small>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="bwsRating">BWS Rating</label>
+            <select id="bwsRating">
+              <option value="1">1</option>
+              <option value="1.5" selected>1.5</option>
+              <option value="2">2</option>
+              <option value="2.5">2.5</option>
+              <option value="3">3</option>
+              <option value="3.5">3.5</option>
+              <option value="4">4+</option>
+              <option value="7">7+</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="itemImage">Upload an image of the Collection Item</label>
+            <input id="itemImage" type="file" accept="image/*" />
+            <div class="upload-preview">
+              <img id="itemPreview" alt="Item preview" src="" />
+            </div>
+          </div>
+        </section>
+
+        <section class="card lighting-card">
+          <h2>Lighting</h2>
+
+          <div class="mode-selector" aria-label="Lighting mode selector">
+            <button class="mode-button active" type="button" data-mode="continuous">Continuous Lighting</button>
+            <button class="mode-button" type="button" data-mode="interactive">Interactive Lighting</button>
+          </div>
+
+          <div id="continuousPanel" class="lighting-panel active">
+            <div class="field-row two-up">
+              <div class="field">
+                <label for="continuousDaysOpen">Exhibition days open weekly</label>
+                <input id="continuousDaysOpen" type="number" min="1" max="7" value="7" />
+              </div>
+              <div class="field">
+                <label for="continuousDisplayLength">Length of display</label>
+                <select id="continuousDisplayLength">
+                  <option value="0.25">3 months</option>
+                  <option value="0.5">6 months</option>
+                  <option value="1">1 year</option>
+                  <option value="2">2 years</option>
+                  <option value="3">3 years</option>
+                  <option value="5">5 years</option>
+                  <option value="7">7 years</option>
+                  <option value="10" selected>10 years / permanent</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row two-up">
+              <div class="field">
+                <label for="continuousExhibitionHours">Exhibition hours per day</label>
+                <input id="continuousExhibitionHours" type="number" min="1" max="24" value="10" />
+              </div>
+              <div class="field">
+                <label for="continuousExhibitionLux">Exhibition lux level</label>
+                <input id="continuousExhibitionLux" type="number" min="0" max="4000" value="50" />
+              </div>
+            </div>
+
+            <div class="field-row two-up">
+              <div class="field">
+                <label for="continuousCleaningHours">Cleaning lighting hours per day</label>
+                <input id="continuousCleaningHours" type="number" min="0" max="24" value="1" />
+              </div>
+              <div class="field">
+                <label for="continuousCleaningLux">Cleaning lighting lux</label>
+                <input id="continuousCleaningLux" type="number" min="0" max="4000" value="25" />
+              </div>
+            </div>
+
+            <div class="field-row two-up">
+              <div class="field">
+                <label>Out of hours lighting</label>
+                <input id="continuousOutHoursDisplay" type="text" readonly value="13.0 hours" />
+              </div>
+              <div class="field">
+                <label for="continuousOutHoursLux">Out of hours lux</label>
+                <input id="continuousOutHoursLux" type="number" min="0" max="4000" value="0" />
+              </div>
+            </div>
+          </div>
+
+          <div id="interactivePanel" class="lighting-panel">
+            <div class="field-row two-up">
+              <div class="field">
+                <label for="interactiveDaysOpen">Exhibition days open weekly</label>
+                <input id="interactiveDaysOpen" type="number" min="1" max="7" value="7" />
+              </div>
+              <div class="field">
+                <label for="interactiveDisplayLength">Length of display</label>
+                <select id="interactiveDisplayLength">
+                  <option value="0.25">3 months</option>
+                  <option value="0.5">6 months</option>
+                  <option value="1">1 year</option>
+                  <option value="2">2 years</option>
+                  <option value="3">3 years</option>
+                  <option value="5">5 years</option>
+                  <option value="7">7 years</option>
+                  <option value="10" selected>10 years / permanent</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row two-up">
+              <div class="field">
+                <label for="interactiveExhibitionHours">Exhibition hours per day</label>
+                <input id="interactiveExhibitionHours" type="number" min="1" max="24" value="8" />
+              </div>
+              <div class="field">
+                <label for="interactiveExhibitionLux">Exhibition lux level</label>
+                <input id="interactiveExhibitionLux" type="number" min="0" max="4000" value="10" />
+              </div>
+            </div>
+
+            <div class="field-row two-up">
+              <div class="field">
+                <label for="interactiveCleaningHours">Cleaning lighting hours per day</label>
+                <input id="interactiveCleaningHours" type="number" min="0" max="24" value="1" />
+              </div>
+              <div class="field">
+                <label for="interactiveCleaningLux">Cleaning lux level</label>
+                <input id="interactiveCleaningLux" type="number" min="0" max="4000" value="20" />
+              </div>
+            </div>
+
+            <div class="field-row two-up">
+              <div class="field slider-field">
+                <label for="ambientLux">Ambient lux</label>
+                <input id="ambientLux" type="range" min="0" max="4000" step="5" value="10" />
+                <div class="range-output"><span id="ambientLuxValue">10</span> lux</div>
+              </div>
+              <div class="field slider-field">
+                <label for="activeLux">Active lux</label>
+                <input id="activeLux" type="range" min="0" max="4000" step="5" value="100" />
+                <div class="range-output"><span id="activeLuxValue">100</span> lux</div>
+              </div>
+            </div>
+
+            <div class="field-row two-up">
+              <div class="field">
+                <label for="interactiveOnMinutes">Time on (minutes)</label>
+                <input id="interactiveOnMinutes" type="number" min="0" max="1440" value="2" />
+              </div>
+              <div class="field">
+                <label for="interactiveOffMinutes">Time off (minutes)</label>
+                <input id="interactiveOffMinutes" type="number" min="0" max="1440" value="2" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card results-card">
+          <h2>Exposure Results</h2>
+
+          <div id="statusBox" class="status-box neutral" aria-live="polite">
+            Waiting for input
+          </div>
+
+          <div class="metrics-grid">
+            <div class="metric-box">
+              <span class="metric-label">10-year dose consumed</span>
+              <strong id="percentValue">0%</strong>
+            </div>
+            <div class="metric-box">
+              <span class="metric-label">Allocated dose</span>
+              <strong id="limitValue">0 lux-hours</strong>
+            </div>
+            <div class="metric-box wide">
+              <span class="metric-label">Total exposure</span>
+              <strong id="exposureValue">0 lux-hours</strong>
+            </div>
+          </div>
+
+          <div class="result-notes">
+            <p id="summaryText">The exposure result updates automatically as the lighting inputs are changed.</p>
+          </div>
+
+          <button id="exportButton" class="export-button" type="button">CREATE A SLIDE</button>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
+
+
+

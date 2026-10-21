@@ -1,0 +1,346 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #f3f5f4;
+  --panel: #ffffff;
+  --panel-alt: #f8faf7;
+  --ink: #1f2933;
+  --muted: #5b6770;
+  --line: #d7dfd8;
+  --accent: #123b52;
+  --accent-soft: #dfeff8;
+  --green: #237a4f;
+  --green-soft: #e8f6ee;
+  --amber: #b97300;
+  --amber-soft: #fdf1d7;
+  --red: #a1292a;
+  --red-soft: #fbe9e8;
+  --shadow: rgba(14, 28, 34, 0.08);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.app-shell {
+  width: min(1500px, calc(100vw - 32px));
+  margin: 18px auto;
+}
+
+.page-header {
+  background: linear-gradient(135deg, #123b52 0%, #1d5372 100%);
+  color: #fff;
+  padding: 22px 28px 18px;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 6px 12px var(--shadow);
+}
+
+.page-header h1 {
+  margin: 0 0 8px;
+  font-size: clamp(24px, 2.5vw, 36px);
+  letter-spacing: 0.02em;
+}
+
+.disclaimer {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.9);
+}
+
+.page-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1.35fr 0.85fr;
+  gap: 18px;
+  padding: 18px;
+  background: #edf1ee;
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 6px 12px var(--shadow);
+}
+
+.card {
+  background: var(--panel);
+  border: 2px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 18px 16px;
+  min-height: 220px;
+}
+
+.card h2 {
+  margin: 0 0 18px;
+  font-size: clamp(22px, 1.4vw, 28px);
+  color: var(--accent);
+}
+
+.field {
+  margin-bottom: 14px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  border: 1.5px solid var(--line);
+  background: var(--panel-alt);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: var(--ink);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(18,59,82,0.1);
+}
+
+.field-row {
+  display: grid;
+  gap: 12px;
+}
+
+.two-up {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.choice-stack {
+  display: grid;
+  gap: 10px;
+}
+
+.choice-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel-alt);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.choice-card input {
+  width: auto;
+  margin: 0;
+}
+
+.choice-card strong,
+.choice-card small {
+  display: block;
+}
+
+.choice-card small {
+  color: var(--muted);
+}
+
+.choice-card:hover {
+  border-color: var(--accent);
+}
+
+.choice-card.selected {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.upload-preview {
+  margin-top: 10px;
+  min-height: 180px;
+  border: 1.5px dashed var(--line);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f7faf8, #edf3ee);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.upload-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.upload-preview.has-image img {
+  display: block;
+}
+
+.mode-selector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.mode-button {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel-alt);
+  color: var(--ink);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mode-button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.lighting-panel {
+  display: none;
+}
+
+.lighting-panel.active {
+  display: block;
+}
+
+.slider-field input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.range-output {
+  margin-top: 8px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.status-box {
+  border-radius: 12px;
+  padding: 16px 18px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 16px;
+  border: 2px solid transparent;
+}
+
+.status-box.green {
+  background: var(--green-soft);
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.status-box.amber {
+  background: var(--amber-soft);
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.status-box.red {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.status-box.neutral {
+  background: #edf3f8;
+  border-color: var(--line);
+  color: var(--muted);
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.metric-box {
+  background: var(--panel-alt);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.metric-box.wide {
+  grid-column: 1 / -1;
+}
+
+.metric-label {
+  color: var(--muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.metric-box strong {
+  font-size: clamp(18px, 1.7vw, 28px);
+  color: var(--ink);
+}
+
+.result-notes {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--accent);
+  background: #f6f9fb;
+  border-radius: 8px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.export-button {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #1d5372, #123b52);
+  color: white;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.export-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(18,59,82,0.18);
+}
+
+@media (max-width: 1180px) {
+  .page-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .two-up {
+    grid-template-columns: 1fr;
+  }
+
+  .mode-selector {
+    flex-direction: column;
+  }
+}
