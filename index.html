@@ -68,7 +68,8 @@
 
           <div class="field">
             <label for="itemImage">Upload an image of the Collection Item</label>
-            <input id="itemImage" type="file" accept="image/*" />
+            <input id="itemImage" type="file" accept="image/jpeg,image/png,image/gif,image/webp" />
+            <p id="imageError" class="image-error" role="alert" hidden></p>
             <div class="upload-preview">
               <img id="itemPreview" alt="Item preview" src="" />
             </div>
@@ -107,7 +108,7 @@
             <div class="field-row two-up">
               <div class="field">
                 <label for="continuousExhibitionHours">Exhibition hours per day</label>
-                <input id="continuousExhibitionHours" type="number" min="1" max="24" value="10" />
+                <input id="continuousExhibitionHours" type="number" min="0" max="24" value="10" />
               </div>
               <div class="field">
                 <label for="continuousExhibitionLux">Exhibition lux level</label>
@@ -128,7 +129,7 @@
 
             <div class="field-row two-up">
               <div class="field">
-                <label>Out of hours lighting</label>
+                <label for="continuousOutHoursDisplay">Out of hours lighting</label>
                 <input id="continuousOutHoursDisplay" type="text" readonly value="13.0 hours" />
               </div>
               <div class="field">
@@ -162,7 +163,7 @@
             <div class="field-row two-up">
               <div class="field">
                 <label for="interactiveExhibitionHours">Exhibition hours per day</label>
-                <input id="interactiveExhibitionHours" type="number" min="1" max="24" value="8" />
+                <input id="interactiveExhibitionHours" type="number" min="0" max="24" value="8" />
               </div>
               <div class="field">
                 <label for="interactiveCleaningHours">Cleaning lighting hours per day</label>
@@ -172,57 +173,50 @@
 
             <div class="field-row two-up">
               <div class="field">
-                <label for="interactiveCleaningLux">Cleaning lux level</label>
+                <label for="interactiveCleaningLux">Cleaning lighting lux</label>
                 <input id="interactiveCleaningLux" type="number" min="0" max="4000" value="20" />
               </div>
+              <div class="field"></div>
+            </div>
+
+            <p class="panel-hint">During exhibition hours the light cycles between ambient (off) and active (on).</p>
+
+            <div class="field-row two-up">
               <div class="field">
-                <label>Out of hours time</label>
+                <label for="ambientLux">Ambient lux (light off)</label>
+                <input id="ambientLux" type="number" min="0" max="4000" value="10" />
+              </div>
+              <div class="field">
+                <label for="interactiveOffMinutes">Ambient time (minutes)</label>
+                <input id="interactiveOffMinutes" type="number" min="0" max="1440" value="2" />
+              </div>
+            </div>
+
+            <div class="field-row two-up">
+              <div class="field">
+                <label for="activeLux">Active lux (light on)</label>
+                <input id="activeLux" type="number" min="0" max="4000" value="100" />
+              </div>
+              <div class="field">
+                <label for="interactiveOnMinutes">Active time (minutes)</label>
+                <input id="interactiveOnMinutes" type="number" min="0" max="1440" value="2" />
+              </div>
+            </div>
+
+            <div class="field-row two-up">
+              <div class="field">
+                <label for="interactiveOutHoursDisplay">Out of hours lighting</label>
                 <input id="interactiveOutHoursDisplay" type="text" readonly value="15.0 hours" />
-              </div>
-            </div>
-
-            <div class="field-row two-up">
-              <div class="field">
-                <label>Ambient</label>
-                <div class="inline-pair">
-                  <div class="mini-field">
-                    <span>Time</span>
-                    <input id="ambientTime" type="number" min="0" max="1440" value="2" />
-                  </div>
-                  <div class="mini-field">
-                    <span>Lux</span>
-                    <input id="ambientLux" type="range" min="0" max="4000" step="5" value="10" />
-                    <div class="range-output"><span id="ambientLuxValue">10</span> lux</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="field">
-                <label>Active</label>
-                <div class="inline-pair">
-                  <div class="mini-field">
-                    <span>Time</span>
-                    <input id="activeTime" type="number" min="0" max="1440" value="2" />
-                  </div>
-                  <div class="mini-field">
-                    <span>Lux</span>
-                    <input id="activeLux" type="range" min="0" max="4000" step="5" value="100" />
-                    <div class="range-output"><span id="activeLuxValue">100</span> lux</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="field-row two-up">
-              <div class="field">
-                <label>Out of hours time</label>
-                <input id="interactiveOutHoursDisplayCalculated" type="text" readonly value="15.0 hours" />
               </div>
               <div class="field">
                 <label for="interactiveOutHoursLux">Out of hours lux</label>
                 <input id="interactiveOutHoursLux" type="number" min="0" max="4000" value="0" />
               </div>
             </div>
+          </div>
+
+          <div id="hoursWarning" class="hours-warning" role="alert" hidden>
+            Exhibition and cleaning hours add up to more than 24. Please check the hours per day.
           </div>
         </section>
 
@@ -253,6 +247,7 @@
           </div>
 
           <button id="exportButton" class="export-button" type="button">CREATE A SLIDE</button>
+          <p id="exportMessage" class="export-message" role="status" hidden></p>
         </section>
       </main>
     </div>
@@ -260,3 +255,6 @@
     <script src="app.js"></script>
   </body>
 </html>
+
+
+
